@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Shree Pement</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body>
+        <div class="print-container">
+        <p id="demo"></p>
+        <p type="text" id="Isn"></p>
+        <p type="text" id="Iname"></p>
+        <p type="text" id="Iamount"></p>
+    </div>
+    <h1><span class="title">Cash</span>Collection</h1>
+    <div class="inputDiv">
+    	   <input type="text" class="input" placeholder="S.N">
+    	   <input type="text" class="input2" placeholder="Merchent-Name">
+    	   <input type="text" class="input3" placeholder="Amount">
+
+           <button class="add"><i class="fas fa-plus"></i></button>
+    </div>
+    <style>
+
+ @media screen {
+   body { font-size: 13px }
+ }
+ @media screen, print {
+   body { line-height: 1.2 }
+ }
+        @media print {
+            /* Hide every other element */
+            body * {
+                visibility: hidden;
+                font-size: 10pt;
+                position:relative;
+	            justify-content: center;
+	            align-items: center;
+	            text-align: center;
+            }
+
+            .print-container, .print-container * {
+                visibility: visible;
+            }
+            .print-container{
+                position:relative;
+	            justify-content: center;
+	            align-items: center;
+	            text-align: center;
+                
+            }
+        }
+    </style>
+
+    <div class="container">
+        <script>
+            const container = document.querySelector('.container');
+var inputValue1 = document.querySelector('.input');
+var inputValue2 = document.querySelector('.input2');
+var inputValue3 = document.querySelector('.input3');
+const add = document.querySelector('.add');
+
+if(window.localStorage.getItem("todos") == undefined){
+     var todos = [];
+     window.localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+var todosEX = window.localStorage.getItem("todos");
+var todos = JSON.parse(todosEX);
+var todos2 = JSON.parse(todosEX);
+
+
+class item{
+	constructor(name){
+		this.createItem(name);
+	}
+    createItem(name){
+    	var itemBox = document.createElement('div');
+        itemBox.classList.add('item');
+
+    	var input = document.createElement('input');
+    	input.type = "text";
+    	input.disabled = true;
+    	input.value = name;
+    	input.classList.add('item_input');
+
+        var input2 = document.createElement('input2');
+    	input2.type = "text";
+    	input2.disabled = true;
+    	input2.value = name;
+    	input2.classList.add('item_input2');
+
+        var input3 = document.createElement('input3');
+    	input3.type = "text";
+    	input3.disabled = true;
+    	input3.value = name;
+    	input3.classList.add('item_input3');
+
+    	var edit = document.createElement('div');
+    	edit.classList.add('edit');
+
+    	var remove = document.createElement('div');
+    	remove.classList.add('remove');
+
+    	container.appendChild(itemBox);
+
+        itemBox.appendChild(input);
+        itemBox.appendChild(input2);
+        itemBox.appendChild(input3);
+        itemBox.appendChild(edit);
+        itemBox.appendChild(remove);
+
+    }
+
+    edit(input, name){
+        if(input.disabled == true){
+           input.disabled = !input.disabled;
+        }
+    	else{
+            input.disabled = !input.disabled;
+            let indexof = todos.indexOf(name);
+            todos[indexof] = input.value;
+            window.localStorage.setItem("todos", JSON.stringify(todos));
+        }
+    }
+
+    remove(itemBox, name){
+        itemBox.parentNode.removeChild(itemBox);
+        let index = todos.indexOf(name);
+        todos.splice(index, 1);
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+    }
+}
+
+add.addEventListener('click', check);
+window.addEventListener('keydown', (e) => {
+	if(e.which == 13){
+		check();
+        createItem().print()
+	}
+})
+
+function check(){
+	if(inputValue1.value != "" && inputValue2.value != "" && inputValue3.value != ""){
+		new item(inputValue1.value+". "+inputValue2.value+" , "+inputValue3.value);
+        todos.push("sn-:"+inputValue1.value.length+" name-:"+inputValue2.value.length+" amount-:"+inputValue3.value.length);
+        todos2.push("sn-:"+inputValue1.value.length+" name-:"+inputValue2.value.length+" amount-:"+inputValue3.value.length);
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+        const d = new Date();
+        document.getElementById("demo").innerHTML = d;
+        document.getElementById("Isn").innerHTML = ("sn-:"+inputValue1.value);
+        document.getElementById("Iname").innerHTML = ("name-:"+inputValue2.value);
+        document.getElementById("Iamount").innerHTML = ("amount-:"+inputValue3.value);
+            var str = "Name-:"+document.getElementById("Iname").value;
+    var res = str.replace(/ /g, "_");
+    console.log(res);
+       // document.write("Reciept No.-:"+document.getElementById("Isn").value+" "+res+" Amount-:"+document.getElementById("Iamount").value)
+        window.print()
+        inputValue1.value = "";
+		inputValue2.value = "";
+		inputValue3.value = "";
+	}
+
+}
+
+
+for (var v = 0 ; v < todos.length ; v++){
+    new item(todos[v]);
+}
+
+        </script>
+    </div>
+    <button class="w3-button w3-black w3-round-xxlarge" onclick="window.print();">Print Recently</button>
+    <button class="full-page" onclick="window.open('./index2.html');"> Print Full List </button>
+
+    <script src='main.js'></script>
+</body>
+</html>
